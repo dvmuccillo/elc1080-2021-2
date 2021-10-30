@@ -9,7 +9,7 @@ public class Memory {
     }
 
     private Boolean isValidAddress(Integer address){
-        return address < this.storage.length;
+        return address < this.getSize();
     }
 
     public Error read(Integer address, Integer value){
@@ -19,6 +19,10 @@ public class Memory {
         value = this.storage[address];
 
         return Error.OK;
+    }
+
+    public Integer getSize() {
+        return this.storage.length;
     }
 
     public Error write(Integer address, Integer value){
