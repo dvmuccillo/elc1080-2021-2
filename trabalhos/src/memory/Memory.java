@@ -2,21 +2,31 @@ package memory;
 
 public class Memory {
     
-    private Integer size;
+    private Integer[] storage;
 
     public Memory(Integer size){
-        this.size = size;
+        this.storage = new Integer[size];
+    }
+
+    private Boolean isValidAddress(Integer address){
+        return address < this.storage.length;
     }
 
     public Error read(Integer address, Integer value){
+        if(!this.isValidAddress(address))
+            return Error.INVALID_ADDRESS;
+
+        value = this.storage[address];
+
         return Error.OK;
     }
 
-    private Integer getSize(){
-        return this.size;
-    }
-
     public Error write(Integer address, Integer value){
+        if(!this.isValidAddress(address))
+            return Error.INVALID_ADDRESS;
+
+        this.storage[address] = value;
+
         return Error.OK;
     }
 
