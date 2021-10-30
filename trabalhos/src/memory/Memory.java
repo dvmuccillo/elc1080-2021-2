@@ -8,6 +8,18 @@ public class Memory {
         this.storage = new Integer[size];
     }
 
+    /**
+     * Destrói um objeto de memória.
+     * Ao menos isso é o que essa gambiarra espera, pois já que o java
+     * não nos deixa destruir objetos (ou deixa?) a solução é atribuir
+     * null a referência e esperar que o GC colete o objeto antigo.
+     * 
+     * @param memory
+     */
+    public static void destroy(Memory memory){
+        memory = null;
+    }
+
     private Boolean isValidAddress(Integer address){
         return address < this.getSize();
     }
