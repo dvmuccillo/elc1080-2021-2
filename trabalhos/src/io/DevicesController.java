@@ -1,9 +1,11 @@
 package io;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class DevicesController {
     private Device[] devices;
 
-    public Error read(Integer device, Integer value){
+    public Error read(Integer device, AtomicInteger value){
 
         final Device targetDevice = devices[device];
 
@@ -11,7 +13,7 @@ public class DevicesController {
         if(!(targetDevice instanceof Readable)) return Error.UNSUPPORTED_OPERATION;
 
         final Readable readableDevice = (Readable) targetDevice;
-        value = readableDevice.read();
+        value.set(readableDevice.read());
 
         return Error.OK;
     }

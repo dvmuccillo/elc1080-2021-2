@@ -1,5 +1,7 @@
 package memory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Memory {
     
     private Integer[] storage;
@@ -24,11 +26,11 @@ public class Memory {
         return address < this.getSize();
     }
 
-    public Error read(Integer address, Integer value){
+    public Error read(Integer address, AtomicInteger value){
         if(!this.isValidAddress(address))
             return Error.INVALID_ADDRESS;
 
-        value = this.storage[address];
+        value.set(this.storage[address]);
 
         return Error.OK;
     }
