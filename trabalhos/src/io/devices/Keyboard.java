@@ -7,8 +7,7 @@ public class Keyboard extends Device implements Readable{
 
     @Override
     public Integer read() {
-        // TODO Auto-generated method stub
-        return null;
+        return 1;
     }
     
 }

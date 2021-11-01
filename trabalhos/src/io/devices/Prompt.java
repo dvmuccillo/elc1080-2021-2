@@ -6,9 +6,8 @@ import io.Writable;
 public class Prompt extends Device implements Writable {
 
     @Override
-    public void write() {
-        // TODO Auto-generated method stub
-        
+    public void write(Integer value) {
+        System.out.println(value);        
     }
     
 }
