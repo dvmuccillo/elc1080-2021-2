@@ -67,6 +67,5 @@ public class App {
                 break;
             }
         }
-        cpu.printState();
     }
 }
