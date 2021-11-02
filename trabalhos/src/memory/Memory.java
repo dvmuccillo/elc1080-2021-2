@@ -40,13 +40,18 @@ public class Memory {
     }
 
     public Error write(Integer address, Integer value){
-        
+
         if(!this.isValidAddress(address))
             return Error.INVALID_ADDRESS;
 
         this.storage[address] = value;
 
         return Error.OK;
+    }
+
+    public void debug(){
+        for(int i = 0; i < this.storage.length; i++)
+            System.out.println("Address " +  i + ": " + this.storage[i]);
     }
 
 }

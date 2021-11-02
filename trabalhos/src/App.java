@@ -41,5 +41,10 @@ public class App {
             }
         }
 
+        /**
+         * Para debug dos valores em memória
+         */
+        //memory.debug();
+
     }
 }
