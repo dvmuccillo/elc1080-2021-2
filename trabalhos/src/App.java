@@ -6,14 +6,14 @@ import memory.Memory;
 public class App {
 
     /**
-     * O tamanho da memória
+     * O tamanho da memória.
      */
     private static Integer memorySize = 20;
 
     public static void main(String[] args) throws Exception {
         
         /**
-         * Programa para executar na nossa CPU
+         * Programa para executar na nossa CPU.
          */
         final Integer[] program = { 
             2, 0, 7, 2, 10, 5, 17,    //  0      x=0; l=10
@@ -24,7 +24,7 @@ public class App {
         };
 
         /**
-         * Variáveis que representam o computador
+         * Variáveis que representam o computador.
          */
 
         final Memory memory = new Memory(memorySize);
@@ -32,7 +32,7 @@ public class App {
         final CPU cpu = new CPU();
 
         /**
-         * Copia o programa para a memória
+         * Copia o programa para a memória.
          */
         for(int i = 0; i < program.length; i++){
             if(memory.write(i, program[i]) != Error.OK){
@@ -42,9 +42,16 @@ public class App {
         }
 
         /**
-         * Para debug dos valores em memória
+         * Para debug dos valores em memória.
          */
         //memory.debug();
+
+        /**
+         * Inicializa a CPU com as variáveis criadas.
+         */
+        cpu.setDevicesController(devicesController);
+        cpu.setMemory(memory);
+        cpu.setMode(0);
 
     }
 }

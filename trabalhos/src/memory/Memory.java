@@ -51,7 +51,7 @@ public class Memory {
 
     public void debug(){
         for(int i = 0; i < this.storage.length; i++)
-            System.out.println("Address " +  i + ": " + this.storage[i]);
+            System.out.println("Endereco " +  i + ": " + this.storage[i]);
     }
 
 }

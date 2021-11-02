@@ -36,14 +36,47 @@ public class CPU {
      * Complemento de Parada.
      * Registrador que contém informação complementar sobre o motivo de não estar em modo normal.
      */
-    private int stopInfo;
+    private String stopInfo;
 
     private Memory memory;
 
     private DevicesController devicesController;
 
+    /**
+     * Retorna o estado da CPU.
+     * 
+     * @return O estado da CPU.
+     */
+    public Integer getMode(){
+        return this.mode;
+    }
+
+    /**
+     * Imprime o estado da CPU.
+     */
+    public void printMode(){
+        StringBuilder stringBuilder = new StringBuilder("Estado da CPU: ").append(this.mode);
+
+        if(0 == this.mode){
+            stringBuilder.append(" (OK)");
+        } else {
+            stringBuilder.append(" - Erro: ").append(this.stopInfo);
+        } 
+
+        System.out.println(stringBuilder.toString());
+    }
+
     public void setDevicesController(DevicesController devicesController){
         this.devicesController = devicesController;
+    }
+
+    /**
+     * Define o estado da CPU.
+     * 
+     * @param mode O estado da CPU.
+     */
+    public void setMode(Integer mode){
+        this.mode = mode;
     }
 
     public void setMemory(Memory memory){
