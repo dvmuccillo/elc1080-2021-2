@@ -1,4 +1,4 @@
-package memory;
+package mem;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

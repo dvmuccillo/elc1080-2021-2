@@ -1,4 +1,4 @@
-package memory;
+package mem;
 
 public enum Error {
     
