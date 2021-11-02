@@ -1,4 +1,4 @@
-package cpu;
+package runner;
 
 import io.DevicesController;
 import memory.Memory;
@@ -64,6 +64,17 @@ public class CPU {
         } 
 
         System.out.println(stringBuilder.toString());
+    }
+
+    /**
+     * Executa uma instrução da memória.
+     * 
+     * @return
+     */
+    public Error run(){
+        
+
+        return Error.OK;
     }
 
     public void setDevicesController(DevicesController devicesController){

@@ -1,4 +1,4 @@
-import cpu.CPU;
+import runner.CPU;
 import io.DevicesController;
 import memory.Error;
 import memory.Memory;
@@ -53,5 +53,17 @@ public class App {
         cpu.setMemory(memory);
         cpu.setMode(0);
 
+        /**
+         * Executa uma instrução por vez até parar
+         */
+        while(true){
+            cpu.printMode();
+
+            runner.Error error = cpu.run();
+
+            
+
+            break;
+        }
     }
 }

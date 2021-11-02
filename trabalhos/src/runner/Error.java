@@ -1,4 +1,4 @@
-package cpu;
+package runner;
 
 public enum Error {
     OK(0),
