@@ -51,21 +51,23 @@ public class App {
          */
         cpu.setDevicesController(devicesController);
         cpu.setMemory(memory);
-        cpu.setMode(0);
+        cpu.setState(0,0,0,0);
 
         /**
          * Executa uma instrução por vez até parar
          */
         while(true){
-            cpu.printMode();
+            cpu.printState();
 
             runner.Error error = cpu.run();
 
             if(runner.Error.OK != error){
                 System.out.println("Erro na execução: " + error);
-                cpu.printMode();
+                cpu.printState();
                 break;
             }
+
+            break;
         }
     }
 }

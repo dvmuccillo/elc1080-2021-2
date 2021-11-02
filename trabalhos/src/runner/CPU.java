@@ -43,18 +43,9 @@ public class CPU {
     private DevicesController devicesController;
 
     /**
-     * Retorna o estado da CPU.
-     * 
-     * @return O estado da CPU.
-     */
-    public Integer getMode(){
-        return this.mode;
-    }
-
-    /**
      * Imprime o estado da CPU.
      */
-    public void printMode(){
+    public void printState(){
         StringBuilder stringBuilder = new StringBuilder("Estado da CPU: ").append(this.mode);
 
         if(0 == this.mode){
@@ -64,6 +55,9 @@ public class CPU {
         } 
 
         System.out.println(stringBuilder.toString());
+        System.out.println("PC: " + this.PC);
+        System.out.println("A: " + this.A);
+        System.out.println("X: " + this.X);
     }
 
     /**
@@ -86,8 +80,11 @@ public class CPU {
      * 
      * @param mode O estado da CPU.
      */
-    public void setMode(Integer mode){
+    public void setState(Integer mode, Integer PC, Integer A, Integer X){
         this.mode = mode;
+        this.PC = PC;
+        this.A = A;
+        this.X = X;
     }
 
     public void setMemory(Memory memory){
