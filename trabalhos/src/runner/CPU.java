@@ -88,7 +88,7 @@ public class CPU {
      */
     public Error run(){
         final AtomicInteger instruction = new AtomicInteger();
-        this.memory.read(this.PC++, instruction);
+        this.memory.read(this.PC, instruction);
 
         /**
          * Verificar como melhorar isso aqui depois,
@@ -121,6 +121,8 @@ public class CPU {
             default:
                 this.stop(Error.INVALID_INSTRUCTION.toString());
         }
+
+        this.PC++;
 
         return Error.OK;
     }
