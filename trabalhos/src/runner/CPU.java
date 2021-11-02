@@ -18,7 +18,7 @@ public class CPU {
      * Acumulador.
      * Registrador que contém um dado usado de forma implícita em várias instruções.
      */
-    private int A;
+    private AtomicInteger A;
 
     /**
      * Registrador temporário para leitura do valor A1 (mem[PC+1]).
@@ -51,6 +51,7 @@ public class CPU {
     private DevicesController devicesController;
 
     public CPU(){
+        this.A = new AtomicInteger();
         this.A1 = new AtomicInteger();
     }
 
@@ -88,7 +89,10 @@ public class CPU {
      */
     public Error run(){
         final AtomicInteger instruction = new AtomicInteger();
+        final AtomicInteger aux = new AtomicInteger();
+
         this.memory.read(this.PC, instruction);
+
 
         /**
          * Verificar como melhorar isso aqui depois,
@@ -110,10 +114,189 @@ public class CPU {
             //CARGI
             case 2:
                 if(this.readA1() == mem.Error.OK){
-                    this.A = this.A1.get();
+                    this.A.set(this.A1.get());;
                 }else {
                     this.stop("Erro durante acesso a memoria!");
                 }
+
+                break;
+
+            //CARGM
+            case 3:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), this.A) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                }
+                
+                break;
+
+            //CARGX
+            case 4:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get() + this.X, this.A) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                }
+                
+                break;
+
+            //ARMM
+            case 5:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.write(this.A1.get(), this.A.get()) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                }
+
+                break;
+
+            //ARMX
+            case 6:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.write(this.A1.get() + this.X, this.A.get()) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                }
+
+                break;
+
+            //MXAX
+            case 7:
+                this.X = this.A.get();
+
+                break;
+
+            //MVXA
+            case 8:
+                this.A.set(this.X);
+
+                break;
+
+            //INCX
+            case 9:
+                this.X++;
+
+                break;
+
+            //SOMA
+            case 10:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), aux) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.A.set(this.A.get() + aux.get());
+                } 
+
+                break;
+
+            //SUB
+            case 11:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), aux) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.A.set(this.A.get() - aux.get());
+                } 
+
+                break;
+
+            //MULT
+            case 12:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), aux) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.A.set(this.A.get() * aux.get());
+                } 
+
+                break;
+
+            //DIV
+            case 13:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), aux) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.A.set(this.A.get() / aux.get());
+                } 
+
+                break;
+
+            //RESTO
+            case 14:
+                if(
+                    this.readA1() != mem.Error.OK ||
+                    this.memory.read(this.A1.get(), aux) != mem.Error.OK
+                ){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.A.set(this.A.get() % aux.get());
+                } 
+
+                break;
+
+            //NEG
+            case 15:
+                this.A.set(this.A.get() * -1);
+
+                break;
+
+            //DESV
+            case 16:
+                if(this.readA1() != mem.Error.OK){
+                    this.stop("Erro durante acesso a memoria!");
+                } else {
+                    this.PC = this.A1.get();
+                }
+
+                break;
+
+            //DESVZ
+            case 17:
+                if(0 == this.A.get()){
+                    if(this.readA1() != mem.Error.OK){
+                        this.stop("Erro durante acesso a memoria!");
+                    } else {
+                        this.PC = this.A1.get();
+                    }
+                }
+
+                break;
+
+            //DESVNZ
+            case 18:
+                if(0 != this.A.get()){
+                    if(this.readA1() != mem.Error.OK){
+                        this.stop("Erro durante acesso a memoria!");
+                    } else {
+                        this.PC = this.A1.get();
+                    }
+                }
+
+                break;
+
+            //LE
+            case 19:
+                //TODO
+
+                break;
+
+            //ESCR
+            case 20:
+                //TODO
 
                 break;
 
@@ -139,7 +322,7 @@ public class CPU {
     public void setState(Integer mode, Integer PC, Integer A, Integer X){
         this.mode = mode;
         this.PC = PC;
-        this.A = A;
+        this.A.set(A);
         this.X = X;
     }
 

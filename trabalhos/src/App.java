@@ -66,8 +66,7 @@ public class App {
                 cpu.printState();
                 break;
             }
-            cpu.printState();
-            break;
         }
+        cpu.printState();
     }
 }
