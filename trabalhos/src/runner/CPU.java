@@ -109,7 +109,7 @@ public class CPU {
 
             //CARGI
             case 2:
-                if(this.readA1() != mem.Error.OK){
+                if(this.readA1() == mem.Error.OK){
                     this.A = this.A1.get();
                 }else {
                     this.stop("Erro durante acesso a memoria!");
