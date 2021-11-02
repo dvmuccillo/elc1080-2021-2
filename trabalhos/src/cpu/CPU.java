@@ -1,5 +1,8 @@
 package cpu;
 
+import io.DevicesController;
+import memory.Memory;
+
 public class CPU {
     
     /**
@@ -34,5 +37,17 @@ public class CPU {
      * Registrador que contém informação complementar sobre o motivo de não estar em modo normal.
      */
     private int stopInfo;
+
+    private Memory memory;
+
+    private DevicesController devicesController;
+
+    public void setDevicesController(DevicesController devicesController){
+        this.devicesController = devicesController;
+    }
+
+    public void setMemory(Memory memory){
+        this.memory = memory;
+    }
 
 }

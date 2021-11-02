@@ -40,6 +40,7 @@ public class Memory {
     }
 
     public Error write(Integer address, Integer value){
+        
         if(!this.isValidAddress(address))
             return Error.INVALID_ADDRESS;
 
