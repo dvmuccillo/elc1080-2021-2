@@ -61,9 +61,11 @@ public class App {
 
             runner.Error error = cpu.run();
 
-            
-
-            break;
+            if(runner.Error.OK != error){
+                System.out.println("Erro na execução: " + error);
+                cpu.printMode();
+                break;
+            }
         }
     }
 }
