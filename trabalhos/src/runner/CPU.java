@@ -307,7 +307,7 @@ public class CPU {
 
         this.PC++;
 
-        return Error.OK;
+        return (0 == this.mode) ? Error.OK : Error.STOPED;
     }
 
     public void setDevicesController(DevicesController devicesController){
