@@ -1,7 +1,10 @@
 package runner;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import io.DevicesController;
-import memory.Memory;
+import mem.Memory;
+import runner.Error;
 
 public class CPU {
     
@@ -18,6 +21,11 @@ public class CPU {
     private int A;
 
     /**
+     * Registrador temporário para leitura do valor A1 (mem[PC+1]).
+     */
+    private AtomicInteger A1;
+
+    /**
      * Registrador auxiliar.
      */
     private int X;
@@ -30,7 +38,7 @@ public class CPU {
      *            O código identifica o motivo (execução suspensa por ter executado uma instrução de parada,
      *            ou erro causado na execução da última instrução).
      */
-    private int mode;
+    private int mode; //TODO arrumar isso aqui pra usar o ENUM em vez da gambiarra atual
 
     /**
      * Complemento de Parada.
@@ -41,6 +49,19 @@ public class CPU {
     private Memory memory;
 
     private DevicesController devicesController;
+
+    public CPU(){
+        this.A1 = new AtomicInteger();
+    }
+
+    /**
+     * Busca o valor A1 (PC+1) na memória.
+     * @return O retorno da operação de leitura;
+     */
+    private mem.Error readA1(){
+        final AtomicInteger value = new AtomicInteger();
+        return this.memory.read(this.PC + 1, value);
+    }
 
     /**
      * Imprime o estado da CPU.
@@ -66,7 +87,40 @@ public class CPU {
      * @return
      */
     public Error run(){
-        
+        final AtomicInteger instruction = new AtomicInteger();
+        this.memory.read(this.PC++, instruction);
+
+        /**
+         * Verificar como melhorar isso aqui depois,
+         * por hora switch gigante resolve.
+         */
+        switch(instruction.get()){
+            
+            //NOP
+            case 0:
+                //do nothing
+                break;
+
+            //PARE
+            case 1:
+                this.stop("Instrução de parada executada");
+                
+                break;
+
+            //CARGI
+            case 2:
+                if(this.readA1() != mem.Error.OK){
+                    this.A = this.A1.get();
+                }else {
+                    this.stop("Erro durante acesso a memoria!");
+                }
+
+                break;
+
+            //Instrução desconhecida
+            default:
+                this.stop(Error.INVALID_INSTRUCTION.toString());
+        }
 
         return Error.OK;
     }
@@ -89,6 +143,11 @@ public class CPU {
 
     public void setMemory(Memory memory){
         this.memory = memory;
+    }
+
+    private void stop(String stopInfo){
+        this.mode = Error.STOPED.getValue();
+        this.stopInfo = stopInfo;
     }
 
 }

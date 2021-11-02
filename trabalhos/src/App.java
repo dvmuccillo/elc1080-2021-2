@@ -1,7 +1,7 @@
 import runner.CPU;
 import io.DevicesController;
-import memory.Error;
-import memory.Memory;
+import mem.Error;
+import mem.Memory;
 
 public class App {
 
@@ -66,7 +66,7 @@ public class App {
                 cpu.printState();
                 break;
             }
-
+            cpu.printState();
             break;
         }
     }
